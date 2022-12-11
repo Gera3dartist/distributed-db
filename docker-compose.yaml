@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  master1:
+    image: jgiannuzzi/postgres-bdr
+    container_name: master1-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: master_db
+    ports:
+      - "15432:5432"
+    volumes:
+      - .docker-scripts/init_master1.sql:/docker-entrypoint-initdb.d/initdb.sql
+      - ./data/pgsql:/var/lib/postgresql/data
+  master2:
+    depends_on: 
+      - master1
+    image: jgiannuzzi/postgres-bdr
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: master_db
+    ports:
+      - "15433:5432"
+    volumes:
+      - .docker-scripts/init_master2.sql:/docker-entrypoint-initdb.d/initdb.sql
