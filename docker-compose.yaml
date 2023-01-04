@@ -11,7 +11,7 @@ services:
       - "15432:5432"
     volumes:
       - .docker-scripts/init_master1.sql:/docker-entrypoint-initdb.d/initdb.sql
-      - ./data/pgsql:/var/lib/postgresql/data
+      - ./data/master1:/var/lib/postgresql/data
   master2:
     depends_on: 
       - master1
@@ -24,3 +24,4 @@ services:
       - "15433:5432"
     volumes:
       - .docker-scripts/init_master2.sql:/docker-entrypoint-initdb.d/initdb.sql
+      - ./data/master2:/var/lib/postgresql/data
